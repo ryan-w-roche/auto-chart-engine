@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "auto-chart-engine"
+version = "1.0.0"
+authors = [
+  {name = "Ryan Roche"},
+  {name = "Bryant Vencill"}
+]
+description = "This project streamlines charting for Clone Hero, the free PC rhythm game inspired by Guitar Hero/Rock Band. It generates highly accurate, playable charts directly from audio tracks using advanced extraction techniques like isolating drum tracks from MIDI and extracting precise note data. The engine dramatically reduces the time and effort needed to create custom song charts, enabling efficient creation of multiple songs."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Development Status :: 4 - Beta",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries",
+  "Intended Audience :: End Users/Desktop",
+]
+
+[tool.setuptools]
+packages = ["ace"]
+
+[project.urls]
+"Homepage" = "https://github.com/ryan-w-roche/auto-chart-engine"
