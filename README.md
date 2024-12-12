@@ -17,7 +17,12 @@ pip install -r requirements.txt
 - Moonscraper: https://github.com/FireFox2000000/Moonscraper-Chart-Editor
 - Clone Hero: https://clonehero.net
 
-## Future Code Drop Plans
+## Code Drop Plans
+**Code Drop 1:**
+- Set up coding environment
+- Set up remote desktop for development
+- Begin testing within Jupyter notebooks
+
 **Code Drop 2:**
 - Finish testing within Jupyter notebooks
 - Begin implementation of the ace package CLI
