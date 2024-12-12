@@ -1,3 +1,5 @@
+# Referencing: https://github.com/Fureniku/Drum-MIDI-To-Clone-Hero-Converter/tree/main/src/com/fureniku/miditochdrums
+
 import os
 import mido
 from collections import defaultdict
