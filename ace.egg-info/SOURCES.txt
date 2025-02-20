@@ -8,3 +8,5 @@ ace.egg-info/PKG-INFO
 ace.egg-info/SOURCES.txt
 ace.egg-info/dependency_links.txt
 ace.egg-info/top_level.txt
+ace/data/__init__.py
+ace/data/file_data.py

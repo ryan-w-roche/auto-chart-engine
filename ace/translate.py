@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import os
 import io
 
-class Splitter:
+class ChartTranslator:
     # TODO: Docstring
     def __init__(self):
         load_dotenv()
@@ -36,11 +36,20 @@ class Splitter:
             region_name=self.region_name
         )
 
+        # chart-files
+        self.split_midi_bucket = S3FileManager(
+            bucket_name=self.chart_bucket_name,
+            aws_access_key_id=self.aws_access_key_id,
+            aws_secret_access_key=self.aws_secret_access_key,
+            region_name=self.region_name
+        )
+
     # TODO: Docstring
     def split_midi(self, in_file_dir: str):
         # Write raw MIDI file to S3
         in_file_key = os.path.basename(in_file_dir)         # Extract just the file name
-        self.raw_midi_bucket.write_file(filename=in_file_key, key=in_file_key)
+        with open(in_file_dir, 'rb') as f:
+            self.raw_midi_bucket.write_file(key=in_file_key, data=f)
 
         base, ext = os.path.splitext(in_file_key)           # Split into name and extension
         formatted_base = base.lower().replace(' ', '_')     # Convert the base name to lowercase and replace spaces with underscores
@@ -81,9 +90,12 @@ class Splitter:
 
         # Write split MIDI file to S3
         output_buffer = io.BytesIO()
-        out_mid.save(output_buffer)
+        out_mid.save(file=output_buffer)
         output_buffer.seek(0)
         self.split_midi_bucket.write_file(key=out_file_key, data=output_buffer.getvalue())
 
         # Save and return
         return out_file_key
+    
+    def convert_to_chart(self, in_file_key: str, out_dir: str):
+        pass
