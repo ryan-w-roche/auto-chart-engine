@@ -1,2 +1,9 @@
 .env
 songs/
+
+# Build
+build/
+ace.egg-info/
+
+# venv
+ace-env/
