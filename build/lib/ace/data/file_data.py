@@ -31,7 +31,7 @@ class S3FileManager:
         """
         try:
             response = self.s3.put_object(Bucket=self.bucket_name, Key=key, Body=data)
-            print(f"Successfully uploaded file to {self.bucket_name}/{key}")
+            print(f"Successfully uploaded file to {self.bucket_name}")
             return response
         except botocore.exceptions.ClientError as error:
             print(f"Error uploading file: {error}")
@@ -50,33 +50,33 @@ class S3FileManager:
         try:
             response = self.s3.get_object(Bucket=self.bucket_name, Key=key)
             content = response['Body'].read()
-            print(f"Successfully downloaded file from {self.bucket_name}/{key}")
+            print(f"Successfully retrieved file from {self.bucket_name}")
             return content
         except botocore.exceptions.ClientError as error:
             print(f"Error reading file: {error}")
             return None
 
-# Example usage:
-if __name__ == "__main__":
-    # Replace these values with your bucket name and (if needed) AWS credentials.
-    bucket_name = "your_bucket_name"
-    file_key = "folder/subfolder/example_file.txt"
-    sample_text = "This is a sample file uploaded using boto3."
+# # Example usage:
+# if __name__ == "__main__":
+#     # Replace these values with your bucket name and (if needed) AWS credentials.
+#     bucket_name = "your_bucket_name"
+#     file_key = "folder/subfolder/example_file.txt"
+#     sample_text = "This is a sample file uploaded using boto3."
 
-    # Optionally, include credentials; if they are set in your environment, omit these parameters.
-    s3_manager = S3FileManager(
-        bucket_name,
-        aws_access_key_id="YOUR_ACCESS_KEY",
-        aws_secret_access_key="YOUR_SECRET_KEY",
-        region_name="YOUR_AWS_REGION"
-    )
+#     # Optionally, include credentials; if they are set in your environment, omit these parameters.
+#     s3_manager = S3FileManager(
+#         bucket_name,
+#         aws_access_key_id="YOUR_ACCESS_KEY",
+#         aws_secret_access_key="YOUR_SECRET_KEY",
+#         region_name="YOUR_AWS_REGION"
+#     )
 
-    # Write the file to S3
-    upload_response = s3_manager.write_file(file_key, sample_text)
-    if upload_response:
-        # Retrieve the file from S3
-        downloaded_data = s3_manager.read_file(file_key)
-        if downloaded_data:
-            # Decode bytes to string if text data was uploaded (or handle bytes as needed)
-            print("File content:")
-            print(downloaded_data.decode('utf-8'))
+#     # Write the file to S3
+#     upload_response = s3_manager.write_file(file_key, sample_text)
+#     if upload_response:
+#         # Retrieve the file from S3
+#         downloaded_data = s3_manager.read_file(file_key)
+#         if downloaded_data:
+#             # Decode bytes to string if text data was uploaded (or handle bytes as needed)
+#             print("File content:")
+#             print(downloaded_data.decode('utf-8'))
