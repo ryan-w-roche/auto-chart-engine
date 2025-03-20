@@ -3,9 +3,11 @@
 ## Overview
 Clone Hero is a rhythm game for the PC that uses scrolling sheets of colored notes to simulate the timing of musical notes being hit to a song track. It is the culmination of two communities, Guitar Hero and Rock Band, coming together to create a clone of the games, free for everyone and able to create charts (the scrolling sheets with colored notes) for any song they want. This project will tackle the process of charting songs to make it more accessible and effective so more songs can be included in the game. The plan is to use machine learning to train a model from audio files, cross-referenced with previously existing charts to output a chart file that can be used in the game. Initially, we will take a .mp3 file and separate the drums from the other instruments. Then that isolated drum track will be transformed into a format readable by models which the final custom-trained model can then read to create a chart in an acceptable file format. The final model will be a supervised LLM/SLM trained on a large data set of charts paired with their respective audio.
 
+
 ## Links
-- **Code Drop 3 Video:** 
+- **Code Drop 3 Video:** https://youtu.be/o2kNhwA7w-w
 - **Git Repo:** https://github.com/ryan-w-roche/auto-chart-engine
+
 
 ## Install Instructions
 **Dependencies:**
@@ -17,6 +19,7 @@ pip install -r requirements.txt
 **Software:**
 - Moonscraper: https://github.com/FireFox2000000/Moonscraper-Chart-Editor
 - Clone Hero: https://clonehero.net
+
 
 ## CLI Usage
 The Auto-Chart Engine CLI allows you to extract drum tracks from MIDI files and convert them into `.chart` files compatible with Clone Hero.
@@ -99,21 +102,24 @@ The CLI maps standard drum notes to Clone Hero's drum notes:
 
 
 ## Code Drop Plans
-**Code Drop 1:**
+**Code Drop 1:**</br>
+Video: https://youtu.be/RRo5YtyhadQ
 - Set up coding environment
 - Set up remote desktop for development
 - Begin testing within Jupyter notebooks
 
-**Code Drop 2:**
+**Code Drop 2:**</br>
+Video: https://youtu.be/zmEVN-mckbk
 - Finish testing within Jupyter notebooks
 - Begin implementation of the ace package CLI
 
-**Code Drop 3:**
+**Code Drop 3:**</br>
+Video: https://youtu.be/o2kNhwA7w-w
 - Finish ace package CLI code
 - Begin NFR tests
 - Begin user error handling
 
-**Code Drop 4:**
+**Code Drop 4:**</br>
 - Finish NFR tests
 - Finish user error handling
 - Final cleanup if necessary
