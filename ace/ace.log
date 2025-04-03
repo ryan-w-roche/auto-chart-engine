@@ -1,0 +1,66 @@
+2025-04-03 09:01:26,505 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/tempting time.mid
+2025-04-03 09:01:26,676 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\tempting_time_DRUMS.mid
+2025-04-03 09:01:26,983 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 09:01:27,028 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 09:01:27,122 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\tempting_time_DRUMS.chart
+2025-04-03 09:01:27,124 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Tempting Time (ACE)\notes.chart
+2025-04-03 09:01:27,487 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/tempting_time_DRUMS.chart
+2025-04-03 09:01:38,077 - ace.translate - ERROR - Error: Input file does not exist: C:\Users\marve\ryanroche\Capstone\auto-chart-engine\songs\raw_midi_songs\tempting tim
+2025-04-03 09:01:46,351 - ace.translate - ERROR - Error: Output directory does not exist: test
+2025-04-03 09:03:54,750 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/tempting time.mid
+2025-04-03 09:03:54,920 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\tempting_time_DRUMS.mid
+2025-04-03 09:03:55,210 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 09:03:55,260 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 09:03:55,360 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\tempting_time_DRUMS.chart
+2025-04-03 09:03:55,360 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Tempting Time (ACE)\notes.chart
+2025-04-03 09:03:55,670 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/tempting_time_DRUMS.chart
+2025-04-03 09:04:36,055 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/the spirit of radio.mid
+2025-04-03 09:04:36,210 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\the_spirit_of_radio_DRUMS.mid
+2025-04-03 09:04:36,556 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/the_spirit_of_radio_DRUMS.mid
+2025-04-03 09:04:36,603 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/the_spirit_of_radio_DRUMS.mid
+2025-04-03 09:04:36,676 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\the_spirit_of_radio_DRUMS.chart
+2025-04-03 09:04:36,676 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - The Spirit Of Radio (ACE)\notes.chart
+2025-04-03 09:04:36,980 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/the_spirit_of_radio_DRUMS.chart
+2025-04-03 09:06:20,517 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/big me.mid
+2025-04-03 09:06:20,612 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\big_me_DRUMS.mid
+2025-04-03 09:06:20,886 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/big_me_DRUMS.mid
+2025-04-03 09:06:20,930 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/big_me_DRUMS.mid
+2025-04-03 09:06:20,962 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\big_me_DRUMS.chart
+2025-04-03 09:06:20,964 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Big Me (ACE)\notes.chart
+2025-04-03 09:06:21,260 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/big_me_DRUMS.chart
+2025-04-03 09:07:33,850 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/monkey wrench.mid
+2025-04-03 09:07:33,987 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\monkey_wrench_DRUMS.mid
+2025-04-03 09:07:34,330 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/monkey_wrench_DRUMS.mid
+2025-04-03 09:07:34,402 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/monkey_wrench_DRUMS.mid
+2025-04-03 09:07:34,470 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\monkey_wrench_DRUMS.chart
+2025-04-03 09:07:34,470 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Monkey Wrench (ACE)\notes.chart
+2025-04-03 09:07:34,816 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/monkey_wrench_DRUMS.chart
+2025-04-03 09:08:02,880 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/monkey wrench.mid
+2025-04-03 09:08:03,010 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\monkey_wrench_DRUMS.mid
+2025-04-03 09:08:03,312 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/monkey_wrench_DRUMS.mid
+2025-04-03 09:08:03,360 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/monkey_wrench_DRUMS.mid
+2025-04-03 09:08:03,428 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\monkey_wrench_DRUMS.chart
+2025-04-03 09:08:03,430 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Monkey Wrench (ACE)\notes.chart
+2025-04-03 09:08:03,750 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/monkey_wrench_DRUMS.chart
+2025-04-03 09:16:03,103 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/tempting time.mid
+2025-04-03 09:16:03,278 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\tempting_time_DRUMS.mid
+2025-04-03 09:16:03,566 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 09:16:03,608 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 09:16:03,711 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\tempting_time_DRUMS.chart
+2025-04-03 09:16:03,713 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Tempting Time (ACE)\notes.chart
+2025-04-03 09:16:04,027 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/tempting_time_DRUMS.chart
+2025-04-03 09:22:11,045 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/tempting time.mid
+2025-04-03 09:22:11,217 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\tempting_time_DRUMS.mid
+2025-04-03 09:22:11,520 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 09:22:11,575 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 09:22:11,677 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\tempting_time_DRUMS.chart
+2025-04-03 09:22:11,677 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Tempting Time (ACE)\notes.chart
+2025-04-03 09:22:11,988 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/tempting_time_DRUMS.chart
+2025-04-03 09:26:19,641 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/monkey wrench.mid
+2025-04-03 09:26:19,766 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\monkey_wrench_DRUMS.mid
+2025-04-03 09:26:20,085 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/monkey_wrench_DRUMS.mid
+2025-04-03 09:26:20,124 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/monkey_wrench_DRUMS.mid
+2025-04-03 09:26:20,196 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\monkey_wrench_DRUMS.chart
+2025-04-03 09:26:20,202 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Monkey Wrench (ACE)\notes.chart
+2025-04-03 09:26:20,518 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/monkey_wrench_DRUMS.chart
+2025-04-03 09:33:31,109 - ace.translate - ERROR - Error: Output directory does not exist: test
