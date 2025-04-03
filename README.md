@@ -15,6 +15,7 @@ Clone Hero is a rhythm game for the PC that uses scrolling sheets of colored not
 ```Python
 pip install -r requirements.txt
 ```
+2. Install `fluidsynth` with `chocolatey (Windows)` or `homebrew (Mac)` or your Linux package manager
 
 **Software:**
 - Moonscraper: https://github.com/FireFox2000000/Moonscraper-Chart-Editor
@@ -84,21 +85,13 @@ The CLI maps standard drum notes to Clone Hero's drum notes:
 - Output files are saved both locally and to S3 if credentials are provided
 
 ## Import to Clone Hero Instructions
-1. Where the `.chart` file was downloaded, create a new folder in the format `<artist_name> - <song_name>`
-2. Drag and drop the `.chart` into the new folder
-3. Rename the `.chart` file to `notes.chart`
-4. Right click on `notes.chart` and click on "Edit in Notepad"
-5. Under the `[Song]` section, edit any of the metadata to you desire
-6. Save and exit the notepad
-7. Purchase and download a `.ogg` version of the song your created
-8. Drag and drop that `.ogg` file into the folder with the `notes.chart`
-9. Rename the file to `song.ogg`
-10. Drag and drop the folder with the two files into your Clone Her songs path
-11. In Clone Hero, go to `Settings` → `General` → `Scan Songs` → `Yes`
+1. Locate the generated folder titled `artist - <song> (ACE)`
+2. Copy/cut and paste into your Clone Her songs path
+3. In Clone Hero, go to `Settings` → `General` → `Scan Songs` → `Yes`
       - This should create a `song.ini` file in the folder that was copied into the Clone Hero songs path
-12. In the `song.ini` file is more metadata you can edit, but the important one to edit is the `diff_drums` which categorizes the song based on drumming difficulty
-13. Repeat the process in step `11` to see the drum difficulty change
-14. You are now ready to play your newly imported song!
+4. In the `song.ini` file is more metadata you can edit, but the important one to edit is the `diff_drums` which categorizes the song based on drumming difficulty
+5. Repeat the process in step `3` to see the drum difficulty change
+6. You are now ready to play your newly imported song!
 
 
 ## Code Drop Plans

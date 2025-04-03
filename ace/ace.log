@@ -64,3 +64,103 @@
 2025-04-03 09:26:20,202 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Monkey Wrench (ACE)\notes.chart
 2025-04-03 09:26:20,518 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/monkey_wrench_DRUMS.chart
 2025-04-03 09:33:31,109 - ace.translate - ERROR - Error: Output directory does not exist: test
+2025-04-03 10:23:24,710 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/higher.mid
+2025-04-03 10:23:24,926 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\higher_DRUMS.mid
+2025-04-03 10:23:25,219 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/higher_DRUMS.mid
+2025-04-03 10:23:25,279 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/higher_DRUMS.mid
+2025-04-03 10:23:25,408 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\higher_DRUMS.chart
+2025-04-03 10:23:25,410 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Higher (ACE)\notes.chart
+2025-04-03 10:23:25,717 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/higher_DRUMS.chart
+2025-04-03 10:25:52,731 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/tempting time.mid
+2025-04-03 10:25:52,904 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\tempting_time_DRUMS.mid
+2025-04-03 10:25:53,201 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 10:25:53,243 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 10:25:53,340 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\tempting_time_DRUMS.chart
+2025-04-03 10:25:53,341 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Tempting Time (ACE)\notes.chart
+2025-04-03 10:25:53,684 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/tempting_time_DRUMS.chart
+2025-04-03 10:36:49,063 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/tempting time.mid
+2025-04-03 10:36:49,256 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\tempting_time_DRUMS.mid
+2025-04-03 10:36:49,561 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 10:36:49,609 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/tempting_time_DRUMS.mid
+2025-04-03 10:36:49,710 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\tempting_time_DRUMS.chart
+2025-04-03 10:36:49,712 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Tempting Time (ACE)\notes.chart
+2025-04-03 10:36:50,390 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/tempting_time_DRUMS.chart
+2025-04-03 10:45:30,710 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 10:45:31,012 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 10:45:31,349 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 10:45:31,425 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 10:45:31,556 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 10:45:31,557 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 10:45:31,908 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 15:05:42,909 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 15:05:43,179 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 15:05:43,483 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:05:43,544 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:05:43,661 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 15:05:43,663 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 15:05:44,269 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 15:06:00,720 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 15:06:00,988 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 15:06:01,273 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:06:01,331 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:06:01,446 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 15:06:01,448 - ace.translate - INFO - Successfully created folder and chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 15:06:01,793 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 15:53:50,202 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 15:53:50,473 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 15:53:50,808 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:53:50,878 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:53:50,994 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 15:53:50,996 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 15:53:51,369 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 15:53:51,451 - ace.translate - ERROR - Error: Failed to create "song.ogg" file
+2025-04-03 15:54:53,562 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 15:54:53,841 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 15:54:54,168 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:54:54,236 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:54:54,361 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 15:54:54,362 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 15:54:54,675 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 15:54:54,761 - ace.translate - ERROR - Error: Failed to create "song.ogg" file
+2025-04-03 15:57:06,822 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 15:57:07,097 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 15:57:07,381 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:57:07,445 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:57:07,565 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 15:57:07,566 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 15:57:07,901 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 15:57:08,681 - ace.translate - INFO - Successfully created ogg file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\song.ogg
+2025-04-03 15:58:03,118 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 15:58:03,399 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 15:58:03,711 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:58:03,779 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:58:03,903 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 15:58:03,905 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 15:58:04,247 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 15:58:07,539 - ace.translate - INFO - Successfully created ogg file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\song.ogg
+2025-04-03 15:59:54,853 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 15:59:55,132 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 15:59:55,480 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:59:55,542 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 15:59:55,659 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 15:59:55,662 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 15:59:55,988 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 15:59:59,297 - ace.translate - INFO - Successfully created ogg file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\song.ogg
+2025-04-03 16:14:34,752 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 16:14:35,028 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 16:14:35,342 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 16:14:35,409 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 16:14:35,529 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 16:14:35,532 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 16:14:35,842 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 16:14:39,117 - ace.translate - INFO - Successfully created ogg file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\song.ogg
+2025-04-03 16:14:40,197 - ace.data.file_data - INFO - Successfully uploaded file to raw-song-files/song.ogg
+2025-04-03 16:15:48,812 - ace.data.file_data - INFO - Successfully uploaded file to raw-midi-files/cafo.mid
+2025-04-03 16:15:49,082 - ace.translate - INFO - Successfully created MIDI file at: C:\Users\marve\Downloads\cafo_DRUMS.mid
+2025-04-03 16:15:49,376 - ace.data.file_data - INFO - Successfully uploaded file to split-midi-files/cafo_DRUMS.mid
+2025-04-03 16:15:49,440 - ace.data.file_data - INFO - Successfully retrieved file from split-midi-files/cafo_DRUMS.mid
+2025-04-03 16:15:49,562 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\cafo_DRUMS.chart
+2025-04-03 16:15:49,563 - ace.translate - INFO - Successfully created chart file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\notes.chart
+2025-04-03 16:15:49,911 - ace.data.file_data - INFO - Successfully uploaded file to chart-files/cafo_DRUMS.chart
+2025-04-03 16:15:53,164 - ace.translate - INFO - Successfully created ogg file at: C:\Users\marve\Downloads\artist - Cafo (ACE)\song.ogg
+2025-04-03 16:15:54,236 - ace.data.file_data - INFO - Successfully uploaded file to raw-song-files/cafo_DRUMS.ogg

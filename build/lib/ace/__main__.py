@@ -30,7 +30,7 @@ def main():
     split_midi_key = splitter.split_midi(in_file_dir=args.input_dir, out_dir=args.output_dir)
 
     # Convert to .chart file
-    splitter.convert_to_chart(in_file_key=split_midi_key, out_dir=args.output_dir)
+    splitter.generate_chart_file(in_file_key=split_midi_key, out_dir=args.output_dir)
 
 if __name__ == "__main__":
     main()
