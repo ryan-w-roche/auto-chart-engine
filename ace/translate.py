@@ -3,10 +3,15 @@ from mido import MidiFile, MidiTrack, MetaMessage
 from .data.file_data import S3FileManager
 from dotenv import load_dotenv
 from collections import defaultdict
+from rich import print
 
 import os
 import io
 import mido
+import logging
+import sys
+
+logger = logging.getLogger(__name__)
 
 class ChartTranslator:
     # TODO: Docstring
@@ -48,6 +53,18 @@ class ChartTranslator:
 
     # TODO: Docstring
     def split_midi(self, in_file_dir: str, out_dir: str):
+        # Check if the input file exists
+        if not os.path.exists(in_file_dir):
+            logger.error(f"Error: Input file does not exist: {in_file_dir}")
+            print(f"[bold red]Error:[/bold red] Input file does not exist: [cyan]{in_file_dir}[/cyan]")
+            sys.exit(1)
+        
+        # Check if the output directory exists
+        if not os.path.exists(out_dir):
+            logger.error(f"Error: Output directory does not exist: {out_dir}")
+            print(f"[bold red]Error:[/bold red] Output directory does not exist: [cyan]{out_dir}[/cyan]")
+            sys.exit(1)
+
         # Write raw MIDI file to S3
         in_file_key = os.path.basename(in_file_dir)         # Extract just the file name
         with open(in_file_dir, 'rb') as f:
@@ -95,9 +112,11 @@ class ChartTranslator:
         out_mid.save(output_file_dir)
 
         if os.path.exists(output_file_dir):
-            print(f".mid file successfully created at: {output_file_dir}")
+            logger.info(f"Successfully created MIDI file at: {output_file_dir}")
+            print(f"[bold green]✔ Successfully created MIDI file at:[/bold green] [cyan]{output_file_dir}[/cyan]")
         else:
-            print("Error: Failed to create .mid file or file is empty")
+            logger.error("Error: Failed to create MIDI file")
+            print("[bold red]Error: Failed to create MIDI file[/bold red]")
 
         # Write split MIDI file to S3
         output_buffer = io.BytesIO()
@@ -112,27 +131,39 @@ class ChartTranslator:
         output_file_dir = os.path.join(out_dir, f"{os.path.splitext(in_file_key)[0]}.chart")
         out_file_key = os.path.basename(output_file_dir)
 
+        # Extract the song name from the file key
+        song_name = out_file_key.replace('_DRUMS.chart', '') if out_file_key.endswith('_DRUMS.chart') else out_file_key
+        song_name = song_name.replace('_', ' ').title()
+
         # Constants
         DRUM_MAPPING = {
-            35: (0, 'K'),  # Acoustic Bass Drum mapped to note 0 with flag 'K' 
-            36: (0, 'K'),  # Bass Drum (Kick) mapped to note 0 with flag 'K' 
-            38: (1, 'R'),  # Acoustic Snare mapped to note 1 with flag 'R' 
-            40: (1, 'R'),  # Electric Snare mapped to note 1 with flag 'R' 
-            42: (2, 'Y'),  # Closed Hi-Hat mapped to note 2 with flag 'Y'   #cymbal
-            44: (2, 'Y'),  # Pedal Hi-Hat mapped to note 2 with flag 'Y'    #cymbal
-            46: (3, 'B'),  # Open Hi-Hat mapped to note 3 with flag 'B'     #cymbal
-            49: (4, 'G'),  # Crash Cymbal 1 mapped to note 4 with flag 'G'  #cymbal
-            51: (3, 'B'),  # Ride Cymbal mapped to note 3 with flag 'B'     #cymbal
-            45: (4, 'G'),  # Low Tom mapped to note 4 with flag 'G' 
-            47: (3, 'B'),  # Mid Tom mapped to note 3 with flag 'B' 
-            48: (2, 'Y'),  # High Mid Tom mapped to note 2 with flag 'Y' 
-            50: (2, 'Y'),  # High Tom mapped to note 2 with flag 'Y' 
-            57: (4, 'G'),  # Crash Cymbal 2 mapped to note 2 with flag 'G'  #cymbal
+            35: (0, 'K'),  # Acoustic Bass Drum
+            36: (0, 'K'),  # Bass Drum (Kick)
+            37: (1, 'R'),  # Side Stick
+            38: (1, 'R'),  # Acoustic Snare
+            39: (1, 'R'),  # Hand Clap
+            40: (1, 'R'),  # Electric Snare
+            41: (4, 'G'),  # Low Floor Tom
+            42: (2, 'Y'),  # Closed Hi-Hat
+            43: (4, 'G'),  # High Floor Tom
+            44: (2, 'Y'),  # Pedal Hi-Hat
+            45: (4, 'G'),  # Low Tom
+            46: (3, 'B'),  # Open Hi-Hat
+            47: (3, 'B'),  # Mid Tom
+            48: (2, 'Y'),  # High Mid Tom
+            49: (4, 'G'),  # Crash Cymbal 1
+            50: (2, 'Y'),  # High Tom
+            51: (3, 'B'),  # Ride Cymbal    
+            52: (4, 'G'),  # Chinese Cymbal
+            53: (3, 'B'),  # Ride Bell
+            55: (2, 'Y'),  # Splash Cymbal
+            57: (4, 'G'),  # Crash Cymbal 2
+            59: (3, 'B'),  # Ride Cymbal 2
         }
         CHART_RESOLUTION = 192
         
         song_metadata = {
-            "Name": f"\"{out_file_key}\"",
+            "Name": f"\"{song_name}\"",
             "Artist": "\"Unknown\"",
             "Charter": "\"ACE\"",
             "Album": "\"Generated Charts\"",
@@ -143,7 +174,9 @@ class ChartTranslator:
             "Difficulty": 0,
             "PreviewStart": 0,
             "PreviewEnd": 0,
-            "Genre": "\"Rock\""
+            "Genre": "\"Rock\"",
+            "MediaType": "\"cd\"",
+            "MusicStream": "\"song.ogg\""
         }
 
         chart_data = {
@@ -182,15 +215,12 @@ class ChartTranslator:
                     chart_data["ExpertDrums"][chart_tick].append(note_str)
 
                     # Apply cymbals to expert notes
-                    if msg.note == 42 or msg.note == 44: # Y
-                        note_str = f"N 66 0{' ' + flag if flag else ''}"
-                        chart_data["ExpertDrums"][chart_tick].append(note_str)
-                    elif msg.note == 46 or msg.note == 51: # B
-                        note_str = f"N 67 0{' ' + flag if flag else ''}"
-                        chart_data["ExpertDrums"][chart_tick].append(note_str)
-                    elif msg.note == 49 or msg.note == 57: # G
-                        note_str = f"N 68 0{' ' + flag if flag else ''}"
-                        chart_data["ExpertDrums"][chart_tick].append(note_str)
+                    if msg.note in [42, 44, 55]:  # Yellow cymbal
+                        chart_data["ExpertDrums"][chart_tick].append(f"N 66 0{' ' + flag if flag else ''}")
+                    elif msg.note in [46, 51, 53, 59]:  # Blue cymbal
+                        chart_data["ExpertDrums"][chart_tick].append(f"N 67 0{' ' + flag if flag else ''}")
+                    elif msg.note in [49, 57, 52]:  # Green cymbal
+                        chart_data["ExpertDrums"][chart_tick].append(f"N 68 0{' ' + flag if flag else ''}")
         
         # Build the .chart file text
         chart_text = "[Song]\n{\n"
@@ -217,9 +247,25 @@ class ChartTranslator:
             f.write(chart_text)
 
         if os.path.exists(output_file_dir):
-            print(f".chart file successfully created at: {output_file_dir}")
+            logger.info(f"Successfully created chart file at: {output_file_dir}")
+            print(f"[bold green]✔ Successfully created chart file at:[/bold green] [cyan]{output_file_dir}[/cyan]")
         else:
-            print("Error: Failed to create .chart file or file is empty")
+            logger.error("Error: Failed to create .chart file")
+            print("[bold red]Error: Failed to create .chart file[/bold red]")
+
+        # Write `notes.chart` version to a new folder for Clone Hero importing
+        ch_dir_name = f"artist - {song_name} (ACE)"
+        os.makedirs(os.path.join(out_dir, ch_dir_name), exist_ok=True)
+        ch_dir = os.path.join(out_dir, ch_dir_name, "notes.chart")
+        with open(ch_dir, 'w') as f:
+            f.write(chart_text)
+
+        if os.path.exists(ch_dir):
+            logger.info(f"Successfully created folder and chart file at: {ch_dir}")
+            print(f"[bold green]✔ Successfully created folder and chart file at:[/bold green] [cyan]{ch_dir}[/cyan]")
+        else:
+            logger.error("Error: Failed to create folder and/or \"notes.chart\" file")
+            print("[bold red]Error: Failed to create folder and/or \"notes.chart\" file[/bold red]")
 
         # Write chart file to S3
         with open(output_file_dir, 'rb') as f:

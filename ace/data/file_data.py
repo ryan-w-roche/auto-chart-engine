@@ -1,11 +1,20 @@
 import boto3
 import botocore
 import logging
-from typing import Optional, Union, List, Dict, Any, Iterator
+from typing import Optional, Union, Dict, Any
+from rich import print
+
 import os
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+root_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(root_dir)
+log_file = os.path.join(parent_dir, "ace.log")
+logging.basicConfig(
+    filename=log_file,
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 class S3FileManager:
@@ -34,14 +43,6 @@ class S3FileManager:
         else:
             self.s3 = boto3.client('s3')
         self.bucket_name = bucket_name
-        
-    def __enter__(self):
-        """Enable context manager support with 'with' statement"""
-        return self
-        
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        """Clean up resources when exiting context manager"""
-        pass
         
     def write_file(self, key: str, data: Union[str, bytes], content_type: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """
@@ -78,9 +79,11 @@ class S3FileManager:
                 
             response = self.s3.put_object(**params)
             logger.info(f"Successfully uploaded file to {self.bucket_name}/{key}")
+            print(f"[bold green]✔ Successfully uploaded file to[/bold green] [cyan]{self.bucket_name}/{key}[/cyan]")
             return response
         except botocore.exceptions.ClientError as error:
             logger.error(f"Error uploading file to {self.bucket_name}/{key}: {error}")
+            print(f"[bold red]Error uploading file to[/bold red] [cyan]{self.bucket_name}/{key}[/cyan]: {error}")
             return None
 
     def read_file(self, key: str) -> Optional[bytes]:
@@ -103,181 +106,9 @@ class S3FileManager:
             response = self.s3.get_object(Bucket=self.bucket_name, Key=key)
             content = response['Body'].read()
             logger.info(f"Successfully retrieved file from {self.bucket_name}/{key}")
+            print(f"[bold green]✔ Successfully retrieved file from[/bold green] [cyan]{self.bucket_name}/{key}[/cyan]")
             return content
         except botocore.exceptions.ClientError as error:
             logger.error(f"Error reading file from {self.bucket_name}/{key}: {error}")
+            print(f"[bold red]Error reading file from[/bold red] [cyan]{self.bucket_name}/{key}[/cyan]: {error}")
             return None
-            
-    def file_exists(self, key: str) -> bool:
-        """
-        Check if a file exists in the S3 bucket.
-        
-        Parameters:
-          key (str): The S3 object key.
-          
-        Returns:
-          bool: True if the file exists, False otherwise.
-        """
-        try:
-            self.s3.head_object(Bucket=self.bucket_name, Key=key)
-            return True
-        except botocore.exceptions.ClientError:
-            return False
-            
-    def delete_file(self, key: str) -> bool:
-        """
-        Delete a file from the S3 bucket.
-        
-        Parameters:
-          key (str): The S3 object key.
-          
-        Returns:
-          bool: True if deletion was successful, False otherwise.
-        """
-        if not key:
-            raise ValueError("Object key must be provided")
-            
-        try:
-            self.s3.delete_object(Bucket=self.bucket_name, Key=key)
-            logger.info(f"Successfully deleted file from {self.bucket_name}/{key}")
-            return True
-        except botocore.exceptions.ClientError as error:
-            logger.error(f"Error deleting file from {self.bucket_name}/{key}: {error}")
-            return False
-            
-    def list_files(self, prefix: str = "", max_items: int = 1000) -> List[Dict[str, Any]]:
-        """
-        List files in the S3 bucket with an optional prefix.
-        
-        Parameters:
-          prefix (str): Prefix to filter objects (like a folder path)
-          max_items (int): Maximum number of items to return
-          
-        Returns:
-          list: List of file information dictionaries
-        """
-        try:
-            paginator = self.s3.get_paginator('list_objects_v2')
-            page_iterator = paginator.paginate(
-                Bucket=self.bucket_name,
-                Prefix=prefix,
-                PaginationConfig={'MaxItems': max_items}
-            )
-            
-            files = []
-            for page in page_iterator:
-                if 'Contents' in page:
-                    files.extend(page['Contents'])
-                    
-            logger.info(f"Listed {len(files)} files from {self.bucket_name} with prefix '{prefix}'")
-            return files
-        except botocore.exceptions.ClientError as error:
-            logger.error(f"Error listing files from {self.bucket_name} with prefix '{prefix}': {error}")
-            return []
-            
-    def copy_file(self, source_key: str, dest_key: str) -> bool:
-        """
-        Copy a file within the same bucket.
-        
-        Parameters:
-          source_key (str): The source S3 object key
-          dest_key (str): The destination S3 object key
-          
-        Returns:
-          bool: True if copy was successful, False otherwise
-        """
-        if not source_key or not dest_key:
-            raise ValueError("Source and destination keys must be provided")
-            
-        try:
-            copy_source = {'Bucket': self.bucket_name, 'Key': source_key}
-            self.s3.copy_object(
-                CopySource=copy_source,
-                Bucket=self.bucket_name,
-                Key=dest_key
-            )
-            logger.info(f"Successfully copied {source_key} to {dest_key} in {self.bucket_name}")
-            return True
-        except botocore.exceptions.ClientError as error:
-            logger.error(f"Error copying {source_key} to {dest_key} in {self.bucket_name}: {error}")
-            return False
-            
-    def upload_file(self, local_path: str, s3_key: str, content_type: Optional[str] = None) -> bool:
-        """
-        Upload a local file to S3.
-        
-        Parameters:
-          local_path (str): Path to the local file
-          s3_key (str): The destination S3 object key
-          content_type (str, optional): The content type of the file
-          
-        Returns:
-          bool: True if upload was successful, False otherwise
-        """
-        if not os.path.exists(local_path):
-            logger.error(f"Local file does not exist: {local_path}")
-            return False
-            
-        try:
-            extra_args = {}
-            if content_type:
-                extra_args['ContentType'] = content_type
-                
-            self.s3.upload_file(
-                local_path, 
-                self.bucket_name, 
-                s3_key,
-                ExtraArgs=extra_args
-            )
-            logger.info(f"Successfully uploaded {local_path} to {self.bucket_name}/{s3_key}")
-            return True
-        except botocore.exceptions.ClientError as error:
-            logger.error(f"Error uploading {local_path} to {self.bucket_name}/{s3_key}: {error}")
-            return False
-            
-    def download_file(self, s3_key: str, local_path: str) -> bool:
-        """
-        Download a file from S3 to a local path.
-        
-        Parameters:
-          s3_key (str): The S3 object key
-          local_path (str): Path where the file should be saved locally
-          
-        Returns:
-          bool: True if download was successful, False otherwise
-        """
-        try:
-            # Ensure the directory exists
-            os.makedirs(os.path.dirname(os.path.abspath(local_path)), exist_ok=True)
-            
-            self.s3.download_file(self.bucket_name, s3_key, local_path)
-            logger.info(f"Successfully downloaded {self.bucket_name}/{s3_key} to {local_path}")
-            return True
-        except botocore.exceptions.ClientError as error:
-            logger.error(f"Error downloading {self.bucket_name}/{s3_key} to {local_path}: {error}")
-            return False
-
-# # Example usage:
-# if __name__ == "__main__":
-#     # Replace these values with your bucket name and (if needed) AWS credentials.
-#     bucket_name = "your_bucket_name"
-#     file_key = "folder/subfolder/example_file.txt"
-#     sample_text = "This is a sample file uploaded using boto3."
-
-#     # Optionally, include credentials; if they are set in your environment, omit these parameters.
-#     s3_manager = S3FileManager(
-#         bucket_name,
-#         aws_access_key_id="YOUR_ACCESS_KEY",
-#         aws_secret_access_key="YOUR_SECRET_KEY",
-#         region_name="YOUR_AWS_REGION"
-#     )
-
-#     # Write the file to S3
-#     upload_response = s3_manager.write_file(file_key, sample_text)
-#     if upload_response:
-#         # Retrieve the file from S3
-#         downloaded_data = s3_manager.read_file(file_key)
-#         if downloaded_data:
-#             # Decode bytes to string if text data was uploaded (or handle bytes as needed)
-#             print("File content:")
-#             print(downloaded_data.decode('utf-8'))
