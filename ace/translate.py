@@ -19,6 +19,7 @@ class ChartTranslator:
         load_dotenv()
 
         # Initialize S3FileManager with bucket name and credentials
+        self.raw_song_bucket_name = "raw-song-files"
         self.raw_midi_bucket_name = "raw-midi-files"
         self.split_midi_bucket_name = "split-midi-files"
         self.chart_bucket_name = "chart-files"
@@ -26,6 +27,14 @@ class ChartTranslator:
         self.aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
         self.aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
         self.region_name = os.getenv("AWS_REGION")
+
+        # raw-song-files
+        self.raw_song_bucket = S3FileManager(
+            bucket_name=self.raw_song_bucket_name,
+            aws_access_key_id=self.aws_access_key_id,
+            aws_secret_access_key=self.aws_secret_access_key,
+            region_name=self.region_name
+        )
 
         # raw-midi-files
         self.raw_midi_bucket = S3FileManager(
@@ -127,9 +136,9 @@ class ChartTranslator:
         # Save and return
         return out_file_key
     
-    def convert_to_chart(self, in_file_key: str, out_dir: str):
-        output_file_dir = os.path.join(out_dir, f"{os.path.splitext(in_file_key)[0]}.chart")
-        out_file_key = os.path.basename(output_file_dir)
+    def generate_chart_file(self, in_file_key: str, out_dir: str, ch_out_dir: str):
+        chart_out_fp = os.path.join(out_dir, f"{os.path.splitext(in_file_key)[0]}.chart")
+        out_file_key = os.path.basename(chart_out_fp)
 
         # Extract the song name from the file key
         song_name = out_file_key.replace('_DRUMS.chart', '') if out_file_key.endswith('_DRUMS.chart') else out_file_key
@@ -243,30 +252,51 @@ class ChartTranslator:
         chart_text += "}"
 
         # Write chart file to local directory
-        with open(output_file_dir, 'w') as f:
+        with open(chart_out_fp, 'w') as f:
             f.write(chart_text)
 
-        if os.path.exists(output_file_dir):
-            logger.info(f"Successfully created chart file at: {output_file_dir}")
-            print(f"[bold green]✔ Successfully created chart file at:[/bold green] [cyan]{output_file_dir}[/cyan]")
+        if os.path.exists(chart_out_fp):
+            logger.info(f"Successfully created chart file at: {chart_out_fp}")
+            print(f"[bold green]✔ Successfully created chart file at:[/bold green] [cyan]{chart_out_fp}[/cyan]")
         else:
             logger.error("Error: Failed to create .chart file")
             print("[bold red]Error: Failed to create .chart file[/bold red]")
 
         # Write `notes.chart` version to a new folder for Clone Hero importing
-        ch_dir_name = f"artist - {song_name} (ACE)"
-        os.makedirs(os.path.join(out_dir, ch_dir_name), exist_ok=True)
-        ch_dir = os.path.join(out_dir, ch_dir_name, "notes.chart")
-        with open(ch_dir, 'w') as f:
+        ch_out_fp = os.path.join(out_dir, ch_out_dir, "notes.chart")
+        with open(ch_out_fp, 'w') as f:
             f.write(chart_text)
 
-        if os.path.exists(ch_dir):
-            logger.info(f"Successfully created folder and chart file at: {ch_dir}")
-            print(f"[bold green]✔ Successfully created folder and chart file at:[/bold green] [cyan]{ch_dir}[/cyan]")
+        if os.path.exists(ch_out_fp):
+            logger.info(f"Successfully created chart file at: {ch_out_fp}")
+            print(f"[bold green]✔ Successfully created chart file at:[/bold green] [cyan]{ch_out_fp}[/cyan]")
         else:
-            logger.error("Error: Failed to create folder and/or \"notes.chart\" file")
-            print("[bold red]Error: Failed to create folder and/or \"notes.chart\" file[/bold red]")
+            logger.error("Error: Failed to create \"notes.chart\" file")
+            print("[bold red]Error: Failed to create folder \"notes.chart\" file[/bold red]")
 
         # Write chart file to S3
-        with open(output_file_dir, 'rb') as f:
+        with open(chart_out_fp, 'rb') as f:
             self.chart_bucket.write_file(key=out_file_key, data=f)
+    
+    def generate_ogg_file(self, in_file_key: str, out_dir: str, ch_out_dir: str):
+        from midi2audio import FluidSynth
+
+        split_midi_fp = os.path.join(out_dir, in_file_key)
+        ogg_out_fp = os.path.join(out_dir, ch_out_dir, "song.ogg")
+
+        # Convert MIDI to OGG
+        fs = FluidSynth(sound_font="ace/soundfonts/FluidR3_GM.sf2")
+        fs.midi_to_audio(midi_file=split_midi_fp, audio_file=ogg_out_fp)
+
+        if os.path.exists(ogg_out_fp):
+            logger.info(f"Successfully created ogg file at: {ogg_out_fp}")
+            print(f"[bold green]✔ Successfully created ogg file at:[/bold green] [cyan]{ogg_out_fp}[/cyan]")
+        else:
+            logger.error("Error: Failed to create \"song.ogg\" file")
+            print("[bold red]Error: Failed to create \"song.ogg\" file[/bold red]")
+
+        # Write ogg file to S3
+        out_file_key = f"{os.path.splitext(in_file_key)[0]}.ogg"
+
+        with open(ogg_out_fp, 'rb') as f:
+            self.raw_song_bucket.write_file(key=out_file_key, data=f)

@@ -194,7 +194,7 @@ class TestChartTranslator(unittest.TestCase):
         mock_merge_tracks.return_value = merged_track
         
         # Call convert_to_chart
-        self.translator.convert_to_chart(in_file_key, out_dir)
+        self.translator.generate_chart_file(in_file_key, out_dir)
         
         # Assertions
         # Check that S3 was queried for the MIDI file
