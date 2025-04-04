@@ -13,7 +13,7 @@ import sys
 
 logger = logging.getLogger(__name__)
 
-class ChartTranslator:
+class Charter:
     # TODO: Docstring
     def __init__(self):
         load_dotenv()
