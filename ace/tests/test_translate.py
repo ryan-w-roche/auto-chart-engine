@@ -5,7 +5,7 @@ import os
 import mido
 from mido import MidiFile, MidiTrack, Message, MetaMessage
 
-from ace.translate import ChartTranslator
+from ace.charter import Charter
 
 class TestChartTranslator(unittest.TestCase):
     """Tests for ChartTranslator class."""
@@ -38,7 +38,7 @@ class TestChartTranslator(unittest.TestCase):
         self.mock_getenv.return_value = 'test-value'
         
         # Initialize ChartTranslator
-        self.translator = ChartTranslator()
+        self.translator = Charter()
         
     def tearDown(self):
         """Tear down test fixtures."""

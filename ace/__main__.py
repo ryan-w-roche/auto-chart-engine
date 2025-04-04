@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from ace.translate import ChartTranslator
+from ace.charter import Charter
 
 import os
 
@@ -26,7 +26,7 @@ def main():
 
     # LOGIC
     # Split the MIDI file
-    charter = ChartTranslator()
+    charter = Charter()
     split_midi_key = charter.split_midi(in_file_dir=args.input_dir, out_dir=args.output_dir)
 
     # Create Clone Hero folder
