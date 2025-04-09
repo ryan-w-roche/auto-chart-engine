@@ -1,11 +1,11 @@
 # Auto-Chart Engine (ACE)
 
 ## Overview
-Clone Hero is a rhythm game for the PC that uses scrolling sheets of colored notes to simulate the timing of musical notes being hit to a song track. It is the culmination of two communities, Guitar Hero and Rock Band, coming together to create a clone of the games, free for everyone and able to create charts (the scrolling sheets with colored notes) for any song they want. This project will tackle the process of charting songs to make it more accessible and effective so more songs can be included in the game. The plan is to use machine learning to train a model from audio files, cross-referenced with previously existing charts to output a chart file that can be used in the game. Initially, we will take a .mp3 file and separate the drums from the other instruments. Then that isolated drum track will be transformed into a format readable by models which the final custom-trained model can then read to create a chart in an acceptable file format. The final model will be a supervised LLM/SLM trained on a large data set of charts paired with their respective audio.
+Clone Hero is a free rhythm game for PC, inspired by Guitar Hero and Rock Band, that allows players to create and play custom charts for any song. This project seeks to streamline and elevate the charting process by leveraging advanced extraction techniques to generate playable chart files directly from audio tracks. By isolating drum tracks from MIDI files and extracting precise note data, the engine produces highly accurate Clone Hero charts that accurately represent the original MIDI composition. This engine reduces the time required to chart a song, streamlining the creation of multiple songs in Clone Hero.
 
 
 ## Links
-- **Code Drop 3 Video:** https://youtu.be/o2kNhwA7w-w
+- **CLI Demonstration:** https://youtu.be/5lndr9maaSY?si=u9W6KzgyaVSeP5da
 - **Git Repo:** https://github.com/ryan-w-roche/auto-chart-engine
 
 
@@ -16,6 +16,9 @@ Clone Hero is a rhythm game for the PC that uses scrolling sheets of colored not
 pip install -r requirements.txt
 ```
 2. Install `fluidsynth` with `chocolatey (Windows)` or `homebrew (Mac)` or your Linux package manager
+```
+choco install fluidsynth
+```
 
 **Software:**
 - Moonscraper: https://github.com/FireFox2000000/Moonscraper-Chart-Editor
@@ -43,19 +46,23 @@ python -m ace -i "C:/Users/username/Music/my_song.mid" -o "C:/Users/username/Doc
 
 ### How It Works
 1. The CLI extracts the drum tracks from your MIDI file
-2. It generates a new MIDI file containing only the drum tracks (saved with suffix "_DRUMS")
-3. It then converts this drum-only MIDI file into a Clone Hero compatible `.chart` file
+2. Generates a new MIDI file containing only the drum tracks (saved with suffix "_DRUMS")
+3. Based on the MIDI with the extracted drums, a `.ogg` version of the midi is generated
+4. Converts this drum-only MIDI file into a Clone Hero compatible `.chart` file
 
 ### Generated Files
-When you run the CLI, it produces two output files:
+When you run the CLI, it produces 3 outputs:
 1. A MIDI file containing only the drum tracks (named `<original_filename>_DRUMS.mid`)
-2. A `.chart` file compatible with Clone Hero (named `<original_filename>_DRUMS.chart`)
+2. A `.chart` file (named `<original_filename>_DRUMS.chart`)
+3. A folder named `artist - <song_name> (ACE)`
+      - Contains `notes.chart` and `song.ogg` files for Clone Hero
 
 ### Data Storage
 The CLI uses AWS S3 for file storage and organization:
 - Raw MIDI files are stored in the `raw-midi-files` bucket
 - Extracted drum MIDI files are stored in the `split-midi-files` bucket
 - Generated chart files are stored in the `chart-files` bucket
+- Generated song files are stored in the `raw-song-files` bucket
 
 To use S3 storage, you need to set up AWS credentials:
 1. Create a `.env` file in the project root directory
@@ -82,7 +89,6 @@ The CLI maps standard drum notes to Clone Hero's drum notes:
 ### Troubleshooting
 - If you encounter errors related to AWS, check your `.env` file and ensure credentials are correct
 - For best results, use standard MIDI files with proper drum channel mapping (channel 10/9)
-- Output files are saved both locally and to S3 if credentials are provided
 
 ## Import to Clone Hero Instructions
 1. Locate the generated folder titled `artist - <song> (ACE)`
@@ -94,7 +100,7 @@ The CLI maps standard drum notes to Clone Hero's drum notes:
 6. You are now ready to play your newly imported song!
 
 
-## Code Drop Plans
+## Code Drops
 **Code Drop 1:**</br>
 Video: https://youtu.be/RRo5YtyhadQ
 - Set up coding environment
