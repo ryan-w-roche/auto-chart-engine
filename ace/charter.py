@@ -22,7 +22,7 @@ class Charter:
     Processes MIDI files to create Clone Hero compatible chart files.
     
     Extracts drum tracks from MIDI files, generates .chart format files,
-    and converts MIDI to audio for use in Clone Hero.8
+    and converts MIDI to audio for use in Clone Hero.
     
     Manages AWS S3 connections for storing and retrieving files.
     """
