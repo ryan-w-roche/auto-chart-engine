@@ -1,3 +1,7 @@
+"""
+Module for converting and processing MIDI files into Clone Hero chart files.
+Handles drum track extraction, .chart file generation, and audio conversion.
+"""
 # Imports and Setup
 from mido import MidiFile, MidiTrack, MetaMessage
 from .data.file_data import S3FileManager
@@ -14,8 +18,35 @@ import sys
 logger = logging.getLogger(__name__)
 
 class Charter:
-    # TODO: Docstring
+    """
+    Processes MIDI files to create Clone Hero compatible chart files.
+    
+    Extracts drum tracks from MIDI files, generates .chart format files,
+    and converts MIDI to audio for use in Clone Hero.
+    
+    Manages AWS S3 connections for storing and retrieving files.
+    """
     def __init__(self):
+        """
+        Initialize the Charter class with AWS S3 bucket connections.
+        
+        Sets up S3 bucket connections for raw songs, raw MIDIs, split MIDIs, and chart files.
+        Validates that the .env file with AWS credentials exists and is properly configured.
+        
+        Raises:
+            SystemExit: If the .env file doesn't exist or is empty.
+        """
+        # Determine the project root and find the .env file
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(script_dir)  # Go up one level from 'ace' directory
+        dotenv_fp = os.path.join(project_root, ".env")
+
+        # Check if the .env exist and is configured
+        if not os.path.exists(dotenv_fp) or os.path.getsize(dotenv_fp) == 0:
+            print("[bold red]The .env does not exist or is empty. Please configure with your AWS Credentials[/bold red]")
+            print("[cyan]> Instructions for configuration are in the README[/cyan]")
+            sys.exit(1)
+
         load_dotenv()
 
         # Initialize S3FileManager with bucket name and credentials
@@ -60,8 +91,24 @@ class Charter:
             region_name=self.region_name
         )
 
-    # TODO: Docstring
     def split_midi(self, in_file_dir: str, out_dir: str):
+        """
+        Extract drum tracks from a MIDI file and save to a new MIDI file.
+        
+        Splits the input MIDI file by extracting only the drum channel (channel 9)
+        and saves it as a new file with "_DRUMS" appended to the filename.
+        Uploads both the original and split MIDI files to S3.
+        
+        Args:
+            in_file_dir (str): Path to the input MIDI file
+            out_dir (str): Directory where the split MIDI file will be saved
+            
+        Returns:
+            str: The key (filename) of the created split MIDI file
+            
+        Raises:
+            SystemExit: If the input file or output directory doesn't exist
+        """
         # Check if the input file exists
         if not os.path.exists(in_file_dir):
             logger.error(f"Error: Input file does not exist: {in_file_dir}")
@@ -137,6 +184,21 @@ class Charter:
         return out_file_key
     
     def generate_chart_file(self, in_file_key: str, out_dir: str, ch_out_dir: str):
+        """
+        Generate a Clone Hero compatible .chart file from a MIDI file.
+        
+        Creates a .chart file from the input MIDI file with drum mappings for Clone Hero.
+        Saves the chart file both in the output directory and in a Clone Hero specific
+        directory structure with 'notes.chart' filename.
+        
+        Args:
+            in_file_key (str): Key (filename) of the split MIDI file in S3
+            out_dir (str): Directory where the chart file will be saved
+            ch_out_dir (str): Clone Hero specific directory name for the chart
+            
+        Returns:
+            None
+        """
         chart_out_fp = os.path.join(out_dir, f"{os.path.splitext(in_file_key)[0]}.chart")
         out_file_key = os.path.basename(chart_out_fp)
 
@@ -279,6 +341,20 @@ class Charter:
             self.chart_bucket.write_file(key=out_file_key, data=f)
     
     def generate_ogg_file(self, in_file_key: str, out_dir: str, ch_out_dir: str):
+        """
+        Convert a MIDI file to OGG audio format for Clone Hero.
+        
+        Uses FluidSynth to synthesize audio from the MIDI file and saves it as song.ogg
+        in the Clone Hero directory structure for audio playback during gameplay.
+        
+        Args:
+            in_file_key (str): Key (filename) of the split MIDI file
+            out_dir (str): Directory where the original MIDI file is located
+            ch_out_dir (str): Clone Hero specific directory where the OGG file will be saved
+            
+        Returns:
+            None
+        """
         from midi2audio import FluidSynth
 
         split_midi_fp = os.path.join(out_dir, in_file_key)
