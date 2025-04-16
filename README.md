@@ -15,14 +15,32 @@ Clone Hero is a free rhythm game for PC, inspired by Guitar Hero and Rock Band, 
 ```Python
 pip install -r requirements.txt
 ```
-2. Install `fluidsynth` with `chocolatey (Windows)` or `homebrew (Mac)` or your Linux package manager
+2. Install `fluidsynth` with `chocolatey (Windows)` or `homebrew (Mac)` or your Linux package manager:
 ```
 choco install fluidsynth
 ```
 
+3. Configure AWS S3 buckets and credentials:
+      - Create or login to your AWS account
+      - Go to `S3`
+      - Create 4 new buckets named the following:
+      ```
+      > raw-song-files
+      > raw-midi-files
+      > split-midi-files
+      > chart-files
+      ```
+      - Create an access key
+      - In the root of the project, create a `.env` file and input the following:
+      ```
+      AWS_ACCESS_KEY_ID=<Your Key ID>
+      AWS_SECRET_ACCESS_KEY=<Your Access Key>
+      AWS_REGION=<Your Region>
+      ```
+
 **Software:**
-- Moonscraper: https://github.com/FireFox2000000/Moonscraper-Chart-Editor
-- Clone Hero: https://clonehero.net
+- Moonscraper (testing/BPM editing): https://github.com/FireFox2000000/Moonscraper-Chart-Editor
+- Clone Hero (song playability): https://clonehero.net
 
 
 ## CLI Usage
