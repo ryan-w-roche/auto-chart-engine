@@ -1,5 +1,6 @@
+LICENSE
 README.md
-setup.py
+pyproject.toml
 ace/__init__.py
 ace/__main__.py
 ace/charter.py
