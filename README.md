@@ -139,6 +139,7 @@ Video: https://youtu.be/o2kNhwA7w-w
 - Begin user error handling
 
 **Code Drop 4:**</br>
+Video: https://youtu.be/ZAJ1YrnicD4
 - Finish NFR tests
 - Finish user error handling
 - Final cleanup if necessary
