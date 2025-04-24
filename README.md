@@ -1,5 +1,7 @@
 # Auto-Chart Engine (ACE)
 
+[Project Portfolio](https://github.com/ryan-w-roche/auto-chart-engine/wiki/Portfolio)
+
 ## Overview
 Clone Hero is a free rhythm game for PC, inspired by Guitar Hero and Rock Band, that allows players to create and play custom charts for any song. This project seeks to streamline and elevate the charting process by leveraging advanced extraction techniques to generate playable chart files directly from audio tracks. By isolating drum tracks from MIDI files and extracting precise note data, the engine produces highly accurate Clone Hero charts that accurately represent the original MIDI composition. This engine reduces the time required to chart a song, streamlining the creation of multiple songs in Clone Hero.
 
