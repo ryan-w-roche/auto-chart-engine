@@ -22,24 +22,6 @@ pip install -r requirements.txt
 choco install fluidsynth
 ```
 
-3. Configure AWS S3 buckets and credentials:
-      - Create or login to your AWS account
-      - Go to `S3`
-      - Create 4 new buckets named the following:
-      ```
-      > raw-song-files
-      > raw-midi-files
-      > split-midi-files
-      > chart-files
-      ```
-      - Create an access key
-      - In the root of the project, create a `.env` file and input the following:
-      ```
-      AWS_ACCESS_KEY_ID=<Your Key ID>
-      AWS_SECRET_ACCESS_KEY=<Your Access Key>
-      AWS_REGION=<Your Region>
-      ```
-
 **Software:**
 - Moonscraper (testing/BPM editing): https://github.com/FireFox2000000/Moonscraper-Chart-Editor
 - Clone Hero (song playability): https://clonehero.net
@@ -77,24 +59,6 @@ When you run the CLI, it produces 3 outputs:
 3. A folder named `artist - <song_name> (ACE)`
       - Contains `notes.chart` and `song.ogg` files for Clone Hero
 
-### Data Storage
-The CLI uses AWS S3 for file storage and organization:
-- Raw MIDI files are stored in the `raw-midi-files` bucket
-- Extracted drum MIDI files are stored in the `split-midi-files` bucket
-- Generated chart files are stored in the `chart-files` bucket
-- Generated song files are stored in the `raw-song-files` bucket
-
-To use S3 storage, you need to set up AWS credentials:
-1. Create a `.env` file in the project root directory
-2. Add the following environment variables:
-   ```
-   AWS_ACCESS_KEY_ID=your_access_key
-   AWS_SECRET_ACCESS_KEY=your_secret_key
-   AWS_REGION=your_region
-   ```
-
-If you don't configure AWS credentials, the CLI will still operate as intended with local files but won't store data in S3.
-
 ### Drum Mapping
 The CLI maps standard drum notes to Clone Hero's drum notes:
 - Kick → Line 
@@ -107,7 +71,6 @@ The CLI maps standard drum notes to Clone Hero's drum notes:
 - Ride → Blue cymbal
 
 ### Troubleshooting
-- If you encounter errors related to AWS, check your `.env` file and ensure credentials are correct
 - For best results, use standard MIDI files with proper drum channel mapping (channel 10/9)
 
 ## Import to Clone Hero Instructions
@@ -118,28 +81,3 @@ The CLI maps standard drum notes to Clone Hero's drum notes:
 4. In the `song.ini` file is more metadata you can edit, but the important one to edit is the `diff_drums` which categorizes the song based on drumming difficulty
 5. Repeat the process in step `3` to see the drum difficulty change
 6. You are now ready to play your newly imported song!
-
-
-## Code Drops
-**Code Drop 1:**</br>
-Video: https://youtu.be/RRo5YtyhadQ
-- Set up coding environment
-- Set up remote desktop for development
-- Begin testing within Jupyter notebooks
-
-**Code Drop 2:**</br>
-Video: https://youtu.be/zmEVN-mckbk
-- Finish testing within Jupyter notebooks
-- Begin implementation of the ace package CLI
-
-**Code Drop 3:**</br>
-Video: https://youtu.be/o2kNhwA7w-w
-- Finish ace package CLI code
-- Begin NFR tests
-- Begin user error handling
-
-**Code Drop 4:**</br>
-Video: https://youtu.be/ZAJ1YrnicD4
-- Finish NFR tests
-- Finish user error handling
-- Final cleanup if necessary
