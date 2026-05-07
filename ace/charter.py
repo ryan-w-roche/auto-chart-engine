@@ -4,13 +4,10 @@ Handles drum track extraction, .chart file generation, and audio conversion.
 """
 # Imports and Setup
 from mido import MidiFile, MidiTrack, MetaMessage
-from .data.file_data import S3FileManager
-from dotenv import load_dotenv
 from collections import defaultdict
 from rich import print
 
 import os
-import io
 import mido
 import logging
 import sys
@@ -23,81 +20,13 @@ class Charter:
     
     Extracts drum tracks from MIDI files, generates .chart format files,
     and converts MIDI to audio for use in Clone Hero.
-    
-    Manages AWS S3 connections for storing and retrieving files.
     """
-    def __init__(self):
-        """
-        Initialize the Charter class with AWS S3 bucket connections.
-        
-        Sets up S3 bucket connections for raw songs, raw MIDIs, split MIDIs, and chart files.
-        Validates that the .env file with AWS credentials exists and is properly configured.
-        
-        Raises:
-            SystemExit: If the .env file doesn't exist or is empty.
-        """
-        # Determine the project root and find the .env file
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        project_root = os.path.dirname(script_dir)  # Go up one level from 'ace' directory
-        dotenv_fp = os.path.join(project_root, ".env")
-
-        # Check if the .env exist and is configured
-        if not os.path.exists(dotenv_fp) or os.path.getsize(dotenv_fp) == 0:
-            print("[bold red]The .env does not exist or is empty. Please configure with your AWS Credentials[/bold red]")
-            print("[cyan]> Instructions for configuration are in the README[/cyan]")
-            sys.exit(1)
-
-        load_dotenv()
-
-        # Initialize S3FileManager with bucket name and credentials
-        self.raw_song_bucket_name = "raw-song-files"
-        self.raw_midi_bucket_name = "raw-midi-files"
-        self.split_midi_bucket_name = "split-midi-files"
-        self.chart_bucket_name = "chart-files"
-
-        self.aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
-        self.aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
-        self.region_name = os.getenv("AWS_REGION")
-
-        # raw-song-files
-        self.raw_song_bucket = S3FileManager(
-            bucket_name=self.raw_song_bucket_name,
-            aws_access_key_id=self.aws_access_key_id,
-            aws_secret_access_key=self.aws_secret_access_key,
-            region_name=self.region_name
-        )
-
-        # raw-midi-files
-        self.raw_midi_bucket = S3FileManager(
-            bucket_name=self.raw_midi_bucket_name,
-            aws_access_key_id=self.aws_access_key_id,
-            aws_secret_access_key=self.aws_secret_access_key,
-            region_name=self.region_name
-        )
-
-        # split-midi-files
-        self.split_midi_bucket = S3FileManager(
-            bucket_name=self.split_midi_bucket_name,
-            aws_access_key_id=self.aws_access_key_id,
-            aws_secret_access_key=self.aws_secret_access_key,
-            region_name=self.region_name
-        )
-
-        # chart-files
-        self.chart_bucket = S3FileManager(
-            bucket_name=self.chart_bucket_name,
-            aws_access_key_id=self.aws_access_key_id,
-            aws_secret_access_key=self.aws_secret_access_key,
-            region_name=self.region_name
-        )
-
     def split_midi(self, in_file_dir: str, out_dir: str):
         """
         Extract drum tracks from a MIDI file and save to a new MIDI file.
         
         Splits the input MIDI file by extracting only the drum channel (channel 9)
         and saves it as a new file with "_DRUMS" appended to the filename.
-        Uploads both the original and split MIDI files to S3.
         
         Args:
             in_file_dir (str): Path to the input MIDI file
@@ -121,14 +50,10 @@ class Charter:
             print(f"[bold red]Error:[/bold red] Output directory does not exist: [cyan]{out_dir}[/cyan]")
             sys.exit(1)
 
-        # Write raw MIDI file to S3
-        in_file_key = os.path.basename(in_file_dir)         # Extract just the file name
-        with open(in_file_dir, 'rb') as f:
-            self.raw_midi_bucket.write_file(key=in_file_key, data=f)
-
-        base, ext = os.path.splitext(in_file_key)           # Split into name and extension
-        formatted_base = base.lower().replace(' ', '_')     # Convert the base name to lowercase and replace spaces with underscores
-        out_file_key = f"{formatted_base}_DRUMS{ext}"       # Append "_DRUMS" and then the original extension
+        in_file_key = os.path.basename(in_file_dir)
+        base, ext = os.path.splitext(in_file_key)
+        formatted_base = base.lower().replace(' ', '_')
+        out_file_key = f"{formatted_base}_DRUMS{ext}"
         output_file_dir = os.path.join(out_dir, out_file_key)
 
         # Initialize MIDI files
@@ -174,13 +99,6 @@ class Charter:
             logger.error("Error: Failed to create MIDI file")
             print("[bold red]Error: Failed to create MIDI file[/bold red]")
 
-        # Write split MIDI file to S3
-        output_buffer = io.BytesIO()
-        out_mid.save(file=output_buffer)
-        output_buffer.seek(0)
-        self.split_midi_bucket.write_file(key=out_file_key, data=output_buffer.getvalue())
-
-        # Save and return
         return out_file_key
     
     def generate_chart_file(self, in_file_key: str, out_dir: str, ch_out_dir: str):
@@ -192,7 +110,7 @@ class Charter:
         directory structure with 'notes.chart' filename.
         
         Args:
-            in_file_key (str): Key (filename) of the split MIDI file in S3
+            in_file_key (str): Filename of the split MIDI file located in out_dir
             out_dir (str): Directory where the chart file will be saved
             ch_out_dir (str): Clone Hero specific directory name for the chart
             
@@ -257,10 +175,9 @@ class Charter:
             "ExpertDrums": defaultdict(list)
         }
 
-        # Read split MIDI file from S3
-        in_file_data = self.split_midi_bucket.read_file(key=in_file_key)
-        in_file_buffer = io.BytesIO(in_file_data)
-        midi = MidiFile(file=in_file_buffer)
+        # Read split MIDI file from local directory
+        in_file_fp = os.path.join(out_dir, in_file_key)
+        midi = MidiFile(in_file_fp)
 
         # Merge tracks to get length
         merged_track = mido.merge_tracks(midi.tracks)
@@ -336,10 +253,7 @@ class Charter:
             logger.error("Error: Failed to create \"notes.chart\" file")
             print("[bold red]Error: Failed to create folder \"notes.chart\" file[/bold red]")
 
-        # Write chart file to S3
-        with open(chart_out_fp, 'rb') as f:
-            self.chart_bucket.write_file(key=out_file_key, data=f)
-    
+
     def generate_ogg_file(self, in_file_key: str, out_dir: str, ch_out_dir: str):
         """
         Convert a MIDI file to OGG audio format for Clone Hero.
@@ -348,21 +262,35 @@ class Charter:
         in the Clone Hero directory structure for audio playback during gameplay.
         
         Args:
-            in_file_key (str): Key (filename) of the split MIDI file
+            in_file_key (str): Filename of the split MIDI file located in out_dir
             out_dir (str): Directory where the original MIDI file is located
             ch_out_dir (str): Clone Hero specific directory where the OGG file will be saved
             
         Returns:
             None
         """
-        from midi2audio import FluidSynth
+        import subprocess
+        import urllib.request
+
+        SOUNDFONT_URL = "https://github.com/ryan-w-roche/auto-chart-engine/releases/download/v2.0.0/FluidR3_GM.sf2"
+        soundfont_dir = os.path.join(os.path.expanduser("~"), ".ace", "soundfonts")
+        sound_font = os.path.join(soundfont_dir, "FluidR3_GM.sf2")
+
+        # Download soundfont on first use
+        if not os.path.exists(sound_font):
+            os.makedirs(soundfont_dir, exist_ok=True)
+            print("[cyan]Downloading soundfont on first use...[/cyan]")
+            urllib.request.urlretrieve(SOUNDFONT_URL, sound_font)
+            print("[bold green]✔ Soundfont downloaded[/bold green]")
 
         split_midi_fp = os.path.join(out_dir, in_file_key)
         ogg_out_fp = os.path.join(out_dir, ch_out_dir, "song.ogg")
 
         # Convert MIDI to OGG
-        fs = FluidSynth(sound_font="ace/soundfonts/FluidR3_GM.sf2")
-        fs.midi_to_audio(midi_file=split_midi_fp, audio_file=ogg_out_fp)
+        subprocess.run(
+            ["fluidsynth", "-ni", "-F", ogg_out_fp, "-r", "44100", sound_font, split_midi_fp],
+            check=True
+        )
 
         if os.path.exists(ogg_out_fp):
             logger.info(f"Successfully created ogg file at: {ogg_out_fp}")
@@ -371,8 +299,3 @@ class Charter:
             logger.error("Error: Failed to create \"song.ogg\" file")
             print("[bold red]Error: Failed to create \"song.ogg\" file[/bold red]")
 
-        # Write ogg file to S3
-        out_file_key = f"{os.path.splitext(in_file_key)[0]}.ogg"
-
-        with open(ogg_out_fp, 'rb') as f:
-            self.raw_song_bucket.write_file(key=out_file_key, data=f)

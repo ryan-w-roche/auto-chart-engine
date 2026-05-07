@@ -3,7 +3,15 @@ songs/
 
 # Build
 build/
-ace.egg-info/
+*.egg-info/
+dist/
 
 # venv
 ace-env/
+.venv
+
+# cache
+__pycache__/
+*.pyc
+*.cpython-312.pyc
+.pytest_cache
