@@ -27,8 +27,6 @@ classifiers = [
 [tool.setuptools]
 packages = ["ace"]
 
-[tool.setuptools.package-data]
-ace = ["soundfonts/*.sf2"]
 
 [project.urls]
 "Homepage" = "https://github.com/ryan-w-roche/auto-chart-engine"

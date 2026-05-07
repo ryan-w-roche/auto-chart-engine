@@ -270,12 +270,23 @@ class Charter:
             None
         """
         import subprocess
+        import urllib.request
+
+        SOUNDFONT_URL = "https://github.com/ryan-w-roche/auto-chart-engine/releases/download/v2.0.0/FluidR3_GM.sf2"
+        soundfont_dir = os.path.join(os.path.expanduser("~"), ".ace", "soundfonts")
+        sound_font = os.path.join(soundfont_dir, "FluidR3_GM.sf2")
+
+        # Download soundfont on first use
+        if not os.path.exists(sound_font):
+            os.makedirs(soundfont_dir, exist_ok=True)
+            print("[cyan]Downloading soundfont on first use...[/cyan]")
+            urllib.request.urlretrieve(SOUNDFONT_URL, sound_font)
+            print("[bold green]✔ Soundfont downloaded[/bold green]")
 
         split_midi_fp = os.path.join(out_dir, in_file_key)
         ogg_out_fp = os.path.join(out_dir, ch_out_dir, "song.ogg")
 
         # Convert MIDI to OGG
-        sound_font = os.path.join(os.path.dirname(__file__), "soundfonts", "FluidR3_GM.sf2")
         subprocess.run(
             ["fluidsynth", "-ni", "-F", ogg_out_fp, "-r", "44100", sound_font, split_midi_fp],
             check=True
