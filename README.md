@@ -15,9 +15,19 @@ Clone Hero is a free rhythm game for PC, inspired by Guitar Hero and Rock Band, 
 ```Python
 pip install -r requirements.txt
 ```
-2. Install `fluidsynth` with `chocolatey (Windows)` or `homebrew (Mac)` or your Linux package manager:
+2. Install `fluidsynth` for your platform:
+
+**Windows** (Chocolatey):
 ```
 choco install fluidsynth
+```
+**Mac** (Homebrew):
+```
+brew install fluid-synth
+```
+**Linux** (apt):
+```
+sudo apt install fluidsynth
 ```
 
 **Software:**
@@ -47,7 +57,7 @@ python -m ace -i "C:/Users/username/Music/my_song.mid" -o "C:/Users/username/Doc
 ### How It Works
 1. The CLI extracts the drum tracks from your MIDI file
 2. Generates a new MIDI file containing only the drum tracks (saved with suffix "_DRUMS")
-3. Based on the MIDI with the extracted drums, a `.ogg` version of the midi is generated
+3. Based on the MIDI with the extracted drums, a `.wav` version of the midi is generated
 4. Converts this drum-only MIDI file into a Clone Hero compatible `.chart` file
 
 ### Generated Files
@@ -55,7 +65,7 @@ When you run the CLI, it produces 3 outputs:
 1. A MIDI file containing only the drum tracks (named `<original_filename>_DRUMS.mid`)
 2. A `.chart` file (named `<original_filename>_DRUMS.chart`)
 3. A folder named `artist - <song_name> (ACE)`
-      - Contains `notes.chart` and `song.ogg` files for Clone Hero
+      - Contains `notes.chart` and `song.wav` files for Clone Hero
 
 ### Drum Mapping
 The CLI maps standard drum notes to Clone Hero's drum notes:

@@ -13,5 +13,11 @@ ace-env/
 # cache
 __pycache__/
 *.pyc
-*.cpython-312.pyc
+.DS_Store
 .pytest_cache
+
+# logs
+*.log
+
+# local guides
+Upload_Guide.md
